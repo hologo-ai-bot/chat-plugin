@@ -49,7 +49,7 @@ export const CloseButton = styled.button`
   background: none;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 30px;
   cursor: pointer;
 `;
 
@@ -65,6 +65,7 @@ export const ChatFooter = styled.div`
   padding: 10px;
   display: flex;
   align-items: center;
+  gap:5px;
 `;
 
 export const ChatInput = styled.input`
@@ -88,6 +89,15 @@ export const SendButton = styled.button`
   }
 `;
 
+
+export const ChatHeaderButtons = styled.div`
+  display: flex;
+  width: 60px;
+  height: auto;
+  justify-content: space-between;
+  align-items: center;
+`
+
 export const Message = styled.div`
   margin: 5px 0;
   padding: 10px;
@@ -98,3 +108,33 @@ export const Message = styled.div`
   max-width: 80%;
   word-wrap: break-word;
 `;
+
+
+
+export const HistoryWrapper = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  flex-direction: column;
+  align-items: flex-start;
+`
+
+
+export const HistoryCard = styled.div`
+  display: flex;
+  width: 90%;
+  height: 50px;
+  margin-top: 10px;
+  border-bottom: 1px solid #7b7b7b;
+  margin-left:10px;
+  align-items: center;
+  padding-left: 5px;
+  color: black;
+  
+
+  &:hover {
+    background-color: #2b78ca;
+  }
+
+`

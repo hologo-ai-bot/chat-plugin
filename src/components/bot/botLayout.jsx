@@ -3,64 +3,40 @@ import {
   ChatPopupWrapper,
   ChatHeader,
   CloseButton,
-  ChatBody,
-  ChatFooter,
-  ChatInput,
-  SendButton,
-  Message,
+  ChatHeaderButtons,
 } from './BotElements';
+import HistoryIcon from '@mui/icons-material/History';
+import ChatWindow from './chatWindow';
+import HistoryWindow from './historyWindow';
+
 
 const BotLayout = () => {
-  const [messages, setMessages] = useState([
-    { text: 'Hi there! How can I help you?', sender: 'bot' }
-  ]);
-  const [inputValue, setInputValue] = useState('');
+  const [viewHistory, setViewHistory] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
 
-  const handleSendMessage = () => {
-    if (inputValue.trim() !== '') {
-      setMessages([...messages, { text: inputValue, sender: 'user' }]);
-      setInputValue('');
-      // Simulate a bot response after a short delay
-      setTimeout(() => {
-        setMessages(prevMessages => [
-          ...prevMessages,
-          { text: 'This is a simulated bot response.', sender: 'bot' }
-        ]);
-      }, 1000);
-    }
+  const handleViewHistory = () => {
+    setViewHistory(!viewHistory);
   };
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const handleSelectChat = (id) => {
+    setSessionId(id);
+    setViewHistory(false);
   };
 
   return (
     <ChatPopupWrapper>
       <ChatHeader>
         <span>Chat with us</span>
-        <CloseButton>×</CloseButton>
+        <ChatHeaderButtons>
+          <HistoryIcon onClick={handleViewHistory} />
+          <CloseButton>×</CloseButton>
+        </ChatHeaderButtons>
       </ChatHeader>
-      <ChatBody>
-        {messages.map((message, index) => (
-          <Message key={index} sender={message.sender}>
-            {message.text}
-          </Message>
-        ))}
-      </ChatBody>
-      <ChatFooter>
-        <ChatInput 
-          type="text" 
-          placeholder="Type your message..." 
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyPress={(event) => {
-            if (event.key === 'Enter') {
-              handleSendMessage();
-            }
-          }}
-        />
-        <SendButton onClick={handleSendMessage}>Send</SendButton>
-      </ChatFooter>
+      {viewHistory ? (
+        <HistoryWindow onSelectChat={handleSelectChat} />
+      ) : (
+        <ChatWindow sessionId={sessionId} setSessionId={setSessionId} />
+      )}
     </ChatPopupWrapper>
   );
 };
